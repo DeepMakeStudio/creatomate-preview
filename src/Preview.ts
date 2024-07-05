@@ -2,6 +2,7 @@ import { v4 as uuid } from 'uuid';
 import { PreviewState } from './PreviewState';
 import { ElementState } from './ElementState';
 import { CompositionState } from './CompositionState';
+import { initCanvas } from './canvas';
 
 export class Preview {
   /**
@@ -126,6 +127,8 @@ export class Preview {
     this.mode = mode;
 
     const iframe = document.createElement('iframe');
+    const canvas = initCanvas();
+    canvas.setAttribute('style', 'width: 100%; height: 100%; background: red;');
     iframe.setAttribute('width', '100%');
     iframe.setAttribute('height', '100%');
     iframe.setAttribute('scrolling', 'no');
@@ -136,6 +139,7 @@ export class Preview {
 
     element.innerHTML = '';
     element.style.overflow = 'hidden';
+    element.append(canvas);
     element.append(iframe);
 
     window.addEventListener('message', this._handleMessage);
